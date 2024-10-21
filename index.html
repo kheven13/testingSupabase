@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supabase Example</title>
+    <script type="module">
+        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/dist/umd/supabase.js';
+
+        const supabaseUrl = 'https://kcqkzddazyzlgkqdvidv.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjcWt6ZGRhenl6bGdrcWR2aWR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyNTYwNDMsImV4cCI6MjA0NDgzMjA0M30.Uu7w0QUX9qegSCbSyxVxIss2rsserDeoMUpoXMscGoc';
+        const supabase = createClient(supabaseUrl, supabaseAnonKey);
+
+        async function fetchData() {
+            const { data, error } = await supabase
+                .from('products')
+                .select('*');
+
+            if (error) {
+                console.error('Error fetching data:', error);
+            } else {
+                console.log('Data:', data);
+            }
+        }
+
+        fetchData();
+    </script>
+</head>
+<body>
+</body>
+</html>
