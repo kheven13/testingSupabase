@@ -3,75 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Supabase GitHub Auth</title>
+    <title>Supabase Connection Example</title>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js"></script>
 </head>
 <body>
-    <h1>Supabase GitHub Authentication</h1>
-    <button id="github-signin-button">Sign in with GitHub</button>
-    <button id="insert-data-button">Insert Data</button>
-    <button id="fetch-data-button">Fetch Data</button>
-    
-    <pre id="output"></pre>
+    <h1>Supabase Connection Example</h1>
+    <button id="fetch-data">Fetch Data</button>
+    <pre id="data-output"></pre>
 
     <script>
-        // Initialize Supabase client
-        const { createClient } = supabase;
-        const supabaseUrl = 'https://kcqkzddazyzlgkqdvidv.supabase.co'; // Replace with your Supabase URL
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjcWt6ZGRhenl6bGdrcWR2aWR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyNTYwNDMsImV4cCI6MjA0NDgzMjA0M30.Uu7w0QUX9qegSCbSyxVxIss2rsserDeoMUpoXMscGoc'; // Replace with your anon key
+        // Initialize Supabase
+        const supabaseUrl = 'https://kcqkzddazyzlgkqdvidv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjcWt6ZGRhenl6bGdrcWR2aWR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyNTYwNDMsImV4cCI6MjA0NDgzMjA0M30.Uu7w0QUX9qegSCbSyxVxIss2rsserDeoMUpoXMscGoc';
+        const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-        const supabase = createClient(supabaseUrl, supabaseAnonKey);
-
-        // GitHub Sign-In
-        async function signInWithGitHub() {
-            const { user, session, error } = await supabase.auth.signIn({
-                provider: 'github',
-            });
-
-            if (error) {
-                console.error('Error signing in:', error.message);
-                document.getElementById('output').textContent = `Error: ${error.message}`;
-            } else {
-                console.log('User signed in:', user);
-                document.getElementById('output').textContent = `User signed in: ${JSON.stringify(user)}`;
-            }
-        }
-
-        // Insert Data
-        async function insertData() {
-            const { data, error } = await supabase
-                .from('your_table_name') // Replace with your table name
-                .insert([{ column_name: 'value' }]); // Replace with your column name and value
-
-            if (error) {
-                console.error('Error inserting data:', error.message);
-                document.getElementById('output').textContent = `Insert Error: ${error.message}`;
-            } else {
-                console.log('Data inserted:', data);
-                document.getElementById('output').textContent = `Data inserted: ${JSON.stringify(data)}`;
-            }
-        }
-
-        // Fetch Data
+        // Fetch data from Supabase
         async function fetchData() {
             const { data, error } = await supabase
-                .from('your_table_name') // Replace with your table name
+                .from('products') // replace with your table name
                 .select('*');
 
             if (error) {
-                console.error('Error fetching data:', error.message);
-                document.getElementById('output').textContent = `Fetch Error: ${error.message}`;
+                console.error('Error fetching data:', error);
             } else {
-                console.log('Fetched data:', data);
-                document.getElementById('output').textContent = `Fetched data: ${JSON.stringify(data)}`;
+                document.getElementById('data-output').textContent = JSON.stringify(data, null, 2);
             }
         }
 
-        // Event listeners for buttons
-        document.getElementById('github-signin-button').onclick = signInWithGitHub;
-        document.getElementById('insert-data-button').onclick = insertData;
-        document.getElementById('fetch-data-button').onclick = fetchData;
+        document.getElementById('fetch-data').addEventListener('click', fetchData);
     </script>
 </body>
 </html>
-
