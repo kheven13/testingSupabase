@@ -13,14 +13,14 @@
 
     <script>
         // Initialize Supabase
-        const supabaseUrl = 'YOUR_SUPABASE_URL';
-        const supabaseKey = 'YOUR_SUPABASE_ANON_KEY';
+        const supabaseUrl = 'https://kcqkzddazyzlgkqdvidv.supabase.co';
+        const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImtjcWt6ZGRhenl6bGdrcWR2aWR2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjkyNTYwNDMsImV4cCI6MjA0NDgzMjA0M30.Uu7w0QUX9qegSCbSyxVxIss2rsserDeoMUpoXMscGoc';
         const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
         // Fetch data from Supabase
         async function fetchData() {
             const { data, error } = await supabase
-                .from('your_table_name') // replace with your table name
+                .from('products') // replace with your table name
                 .select('*');
 
             if (error) {
